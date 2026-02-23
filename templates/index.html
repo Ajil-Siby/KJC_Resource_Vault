@@ -13,6 +13,7 @@
         .vault-card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.2); }
         .btn-kjc { background-color: #ffc107; color: #1a237e; font-weight: bold; border: none; }
         .btn-kjc:hover { background-color: #ffca28; }
+        .filter-btn { border-radius: 20px; margin: 5px; }
     </style>
 </head>
 <body>
@@ -26,8 +27,17 @@
     <div class="hero-section text-center">
         <div class="container">
             <h1>AI Resource Vault</h1>
-            <p class="lead">Submit and organize high-quality AI study materials for our department.</p>
+            <p class="lead">Submit and organize study materials for your current semester.</p>
         </div>
+    </div>
+
+    <div class="container mb-4 text-center">
+        <h5 class="text-secondary mb-3">Filter by Course</h5>
+        <a href="/" class="btn btn-outline-primary filter-btn">All</a>
+        <a href="/?category=Data Structures" class="btn btn-outline-primary filter-btn">Data Structures</a>
+        <a href="/?category=OS and Networks" class="btn btn-outline-primary filter-btn">OS & Networks</a>
+        <a href="/?category=Math and Stats" class="btn btn-outline-primary filter-btn">Math & Stats</a>
+        <a href="/?category=English" class="btn btn-outline-primary filter-btn">English</a>
     </div>
 
     <div class="container">
@@ -44,10 +54,21 @@
                             <label class="form-label">URL / Link</label>
                             <input type="url" name="url" class="form-control" placeholder="https://..." required>
                         </div>
+                        <div class="mb-3">
+                            <label class="form-label">Subject Category</label>
+                            <select name="category" class="form-select" required>
+                                <option value="Data Structures">Data Structures</option>
+                                <option value="OS and Networks">Operating System and Networks</option>
+                                <option value="Math and Stats">Probability / Matrix Theory</option>
+                                <option value="General">Understanding India / Economics</option>
+                                <option value="English">Applied English</option>
+                                <option value="Health">Health and Wellness</option>
+                            </select>
+                        </div>
                         <button type="submit" class="btn btn-primary w-100">Add to Vault</button>
                     </form>
                     <hr>
-                    <p class="small text-muted text-center">Accessible only via KJC local network</p>
+                    <p class="small text-muted text-center">Organized for BSc AI & ML First Year</p>
                 </div>
             </div>
 
@@ -59,14 +80,14 @@
                         <div class="card vault-card h-100 p-3">
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">{{ item.title }}</h5>
-                                <p class="text-muted small">Category: AI/ML Resource</p>
+                                <span class="badge bg-info text-dark mb-2" style="width: fit-content;">{{ item.category or 'General' }}</span>
                                 <a href="{{ item.url }}" target="_blank" class="btn btn-kjc mt-auto">Open Resource</a>
                             </div>
                         </div>
                     </div>
                     {% else %}
                     <div class="col-12 text-center mt-5">
-                        <p class="text-muted">The vault is currently empty. Be the first to add a resource!</p>
+                        <p class="text-muted">No resources found for this category.</p>
                     </div>
                     {% endfor %}
                 </div>
