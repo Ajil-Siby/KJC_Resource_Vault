@@ -5,7 +5,7 @@ from bson.objectid import ObjectId # Crucial for finding specific items by ID
 app = Flask(__name__)
 
 # Cloud Connection - Using your verified Atlas URI
-uri = "mongodb+srv://ajilsiby01_db_user:lcAseHOqFU2qjp2r@cluster0.ixxrisn.mongodb.net/?appName=Cluster0"
+uri = "mongodb+srv://ajilsiby01_db_user:lcAseHOqFU2qjp@cluster0.ixxrisn.mongodb.net/?appName=Cluster0"
 
 try:
     client = MongoClient(uri)
@@ -74,3 +74,4 @@ if __name__ == '__main__':
     import os
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
+    
