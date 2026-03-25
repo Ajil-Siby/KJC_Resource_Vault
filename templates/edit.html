@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --bg-dark: #06060c; --neon-blue: #00d2ff; --neon-purple: #9d50bb; }
-        body { background: var(--bg-dark); color: #e0e0e0; font-family: 'Inter', sans-serif; overflow: hidden; }
+        body { background: var(--bg-dark); color: #e0e0e0; font-family: 'Inter', sans-serif; height: 100vh; display: flex; align-items: center; }
         
         /* Matching Animated Background */
         .bg-animate {
@@ -27,24 +27,20 @@
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            max-width: 500px;
-            margin: 80px auto;
+            border-radius: 20px; width: 100%; max-width: 500px; margin: auto;
         }
         .hero-title {
             background: linear-gradient(to right, var(--neon-blue), var(--neon-purple));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            font-weight: 800;
+            font-weight: 800; text-transform: uppercase;
         }
         .form-control, .form-select {
-            background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.1); color: white;
+            background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.1); color: white !important;
         }
-        .form-control:focus { background: rgba(0, 0, 0, 0.6); color: white; border-color: var(--neon-blue); box-shadow: none; }
         .btn-neon {
             background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
-            color: white; border: none; font-weight: 700; transition: 0.3s;
+            color: white; border: none; font-weight: 700;
         }
-        .btn-neon:hover { filter: brightness(1.2); transform: translateY(-2px); }
     </style>
 </head>
 <body>
@@ -53,22 +49,21 @@
     <div class="container">
         <div class="glass-card p-5 shadow-lg">
             <h2 class="hero-title text-center mb-4"><i class="fas fa-sliders-h me-2"></i>Tuning Node</h2>
-            <p class="text-center small text-white-50 mb-5 text-uppercase" style="letter-spacing: 2px;">Modify Resource Parameters</p>
             
             <form action="/edit/{{ item._id }}" method="POST">
                 <div class="mb-3">
-                    <label class="small text-info opacity-75 fw-bold mb-2">IDENTIFIER (TITLE)</label>
-                    <input type="text" name="title" class="form-control form-control-lg" value="{{ item.title }}" required>
+                    <label class="small text-info opacity-75 fw-bold mb-2">IDENTIFIER</label>
+                    <input type="text" name="title" class="form-control" value="{{ item.title }}" required>
                 </div>
                 
                 <div class="mb-3">
                     <label class="small text-info opacity-75 fw-bold mb-2">DATA SOURCE (URL)</label>
-                    <input type="url" name="url" class="form-control form-control-lg" value="{{ item.url }}" required>
+                    <input type="url" name="url" class="form-control" value="{{ item.url }}" required>
                 </div>
                 
                 <div class="mb-4">
                     <label class="small text-info opacity-75 fw-bold mb-2">CLASSIFICATION</label>
-                    <select name="category" class="form-select form-select-lg">
+                    <select name="category" class="form-select">
                         <option value="Data Structures" {% if item.category == 'Data Structures' %}selected{% endif %}>Data Structures</option>
                         <option value="OS and Networks" {% if item.category == 'OS and Networks' %}selected{% endif %}>OS & Networks</option>
                         <option value="Math and Stats" {% if item.category == 'Math and Stats' %}selected{% endif %}>Math & Stats</option>
@@ -77,8 +72,8 @@
                 </div>
 
                 <div class="d-grid gap-3">
-                    <button type="submit" class="btn btn-neon btn-lg py-3">SAVE CONFIGURATION</button>
-                    <a href="/" class="btn btn-link text-white-50 text-decoration-none text-center">Discard Changes</a>
+                    <button type="submit" class="btn btn-neon py-3">SAVE PARAMETERS</button>
+                    <a href="/" class="text-white-50 text-center text-decoration-none small">Cancel and Return</a>
                 </div>
             </form>
         </div>

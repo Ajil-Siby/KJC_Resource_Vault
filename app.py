@@ -4,7 +4,8 @@ from bson.objectid import ObjectId
 import os
 
 app = Flask(__name__)
-app.secret_key = "kjc_neural_vault_key" # Required for flash notifications
+# CRITICAL: Secret key is required for the 'flash' system to work
+app.secret_key = "kjc_neural_vault_2026" 
 
 # Cloud Connection
 uri = "mongodb+srv://ajilsiby01_db_user:lcAseHOqFU2qjp2r@cluster0.ixxrisn.mongodb.net/?appName=Cluster0"
@@ -13,24 +14,18 @@ try:
     client = MongoClient(uri)
     db = client['KJC_Vault_DB']    
     collection = db['resources']
-    print("Neural Interface Online: Connected to MongoDB Atlas")
+    print("Neural Link Established: MongoDB Atlas Connected.")
 except Exception as e:
-    print(f"System Link Failure: {e}")
+    print(f"Connection Error: {e}")
 
 @app.route('/')
 def index():
-    # Capture search and filter parameters from the URL
     search_query = request.args.get('search')
-    selected_category = request.args.get('category')
-    
     query = {}
-    if selected_category:
-        query["category"] = selected_category
     if search_query:
-        # Case-insensitive partial match search
+        # Regex allows for partial, case-insensitive matching
         query["title"] = {"$regex": search_query, "$options": "i"}
     
-    # Sort by newest first
     items = list(collection.find(query).sort("_id", -1))
     return render_template('index.html', items=items)
 
@@ -42,15 +37,15 @@ def add_resource():
     
     if title and url:
         collection.insert_one({"title": title, "url": url, "category": category})
-        flash(f"Data Packet '{title}' injected successfully.", "success")
+        flash(f"Success: '{title}' has been synced to the cloud.", "success")
     else:
-        flash("Injection failed: Missing required parameters.", "danger")
+        flash("Error: Data packet incomplete.", "danger")
     return redirect(url_for('index'))
 
 @app.route('/delete/<id>')
 def delete_resource(id):
     collection.delete_one({"_id": ObjectId(id)})
-    flash("Resource purged from the neural vault.", "info")
+    flash("Resource purged from the vault.", "info")
     return redirect(url_for('index'))
 
 @app.route('/edit/<id>', methods=['GET', 'POST'])
@@ -64,7 +59,7 @@ def edit_resource(id):
                 "category": request.form.get('category')
             }}
         )
-        flash("Resource parameters updated.", "success")
+        flash("System Update: Resource parameters modified.", "success")
         return redirect(url_for('index'))
     
     item = collection.find_one({"_id": ObjectId(id)})
