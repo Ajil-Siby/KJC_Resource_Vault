@@ -1,0 +1,17 @@
+version: 2.1
+jobs:
+  build_and_test:
+    docker:
+      - image: cimg/python:3.10
+    steps:
+      - checkout
+      - run:
+          name: Install Dependencies
+          command: pip install -r requirements.txt
+      - run:
+          name: Check Python Syntax
+          command: python -m py_compile app.py
+workflows:
+  sample:
+    jobs:
+      - build_and_test
