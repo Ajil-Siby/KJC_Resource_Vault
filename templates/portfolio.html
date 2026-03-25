@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajil Siby | Architect</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root { --bg-dark: #02040a; --neon-blue: #00d2ff; --neon-purple: #9d50bb; }
+        body { background: var(--bg-dark); color: #e0e0e0; font-family: 'Inter', sans-serif; overflow: hidden; }
+        .bg-animate { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #02040a; background-image: radial-gradient(circle at 50% 50%, rgba(0, 210, 255, 0.1) 0%, transparent 70%); z-index: -1; }
+        .hero-text { background: linear-gradient(to right, var(--neon-blue), var(--neon-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 30px; margin-top: 100px; }
+    </style>
+</head>
+<body>
+    <div class="bg-animate"></div>
+    <div class="container">
+        <div class="glass p-5 text-center">
+            <a href="/" class="btn btn-outline-info rounded-pill mb-4">← Back to Vault</a>
+            <h1 class="hero-text display-3">AJIL SIBY</h1>
+            <p class="lead">BSc AI & Machine Learning Student | KJC</p>
+            <p class="opacity-75">I specialize in building intelligent cloud-integrated systems.</p>
+            <div class="mt-4">
+                <span class="badge border border-info p-2 m-1">Python/Flask</span>
+                <span class="badge border border-info p-2 m-1">MongoDB Atlas</span>
+                <span class="badge border border-info p-2 m-1">UI/UX Design</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
