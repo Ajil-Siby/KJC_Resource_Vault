@@ -3,28 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajil Siby | Architect</title>
+    <title>Ajil Siby | System Architect</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --bg-dark: #02040a; --neon-blue: #00d2ff; --neon-purple: #9d50bb; }
-        body { background: var(--bg-dark); color: #e0e0e0; font-family: 'Inter', sans-serif; overflow: hidden; }
-        .bg-animate { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #02040a; background-image: radial-gradient(circle at 50% 50%, rgba(0, 210, 255, 0.1) 0%, transparent 70%); z-index: -1; }
-        .hero-text { background: linear-gradient(to right, var(--neon-blue), var(--neon-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; }
-        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 30px; margin-top: 100px; }
+        body { background: var(--bg-dark); color: #e0e0e0; font-family: 'Inter', sans-serif; min-height: 100vh; display: flex; align-items: center; }
+        
+        .bg-animate {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 210, 255, 0.1) 0%, transparent 70%);
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-text {
+            background: linear-gradient(to right, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        .skill-node {
+            border: 1px solid var(--neon-blue);
+            padding: 15px; border-radius: 15px; background: rgba(0, 210, 255, 0.05);
+            transition: 0.3s;
+        }
+        .skill-node:hover { transform: translateY(-5px); background: rgba(0, 210, 255, 0.15); }
     </style>
 </head>
 <body>
     <div class="bg-animate"></div>
-    <div class="container">
-        <div class="glass p-5 text-center">
-            <a href="/" class="btn btn-outline-info rounded-pill mb-4">← Back to Vault</a>
-            <h1 class="hero-text display-3">AJIL SIBY</h1>
-            <p class="lead">BSc AI & Machine Learning Student | KJC</p>
-            <p class="opacity-75">I specialize in building intelligent cloud-integrated systems.</p>
-            <div class="mt-4">
-                <span class="badge border border-info p-2 m-1">Python/Flask</span>
-                <span class="badge border border-info p-2 m-1">MongoDB Atlas</span>
-                <span class="badge border border-info p-2 m-1">UI/UX Design</span>
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="glass-panel p-5">
+                    <div class="text-start mb-4">
+                        <a href="/" class="btn btn-outline-info rounded-pill px-4"><i class="fas fa-arrow-left me-2"></i>Return to Vault</a>
+                    </div>
+                    
+                    <div class="row align-items-center g-5">
+                        <div class="col-md-4 text-center">
+                            <img src="https://via.placeholder.com/250" class="rounded-circle border border-4 border-info shadow-lg mb-3" style="width: 200px; height: 200px; object-fit: cover;">
+                            <h2 class="text-white">Ajil Siby</h2>
+                            <p class="text-info text-uppercase small fw-bold">Architect Node</p>
+                        </div>
+                        <div class="col-md-8">
+                            <h1 class="hero-text display-4 mb-3">Mission Profile</h1>
+                            <p class="fs-5 opacity-75 mb-4">I am an AI & Machine Learning student at Kristu Jayanti College. I engineered the <strong>KJC Neural Vault</strong> to streamline resource management for the department.</p>
+                            
+                            <div class="row g-3">
+                                <div class="col-sm-4">
+                                    <div class="skill-node text-center">
+                                        <i class="fab fa-python h3 text-info"></i>
+                                        <p class="mb-0 small fw-bold">Backend</p>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="skill-node text-center">
+                                        <i class="fas fa-database h3 text-info"></i>
+                                        <p class="mb-0 small fw-bold">Cloud Data</p>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="skill-node text-center">
+                                        <i class="fas fa-layer-group h3 text-info"></i>
+                                        <p class="mb-0 small fw-bold">UI/UX</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

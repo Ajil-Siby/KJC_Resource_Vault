@@ -7,29 +7,48 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --bg-dark: #02040a; --glass: rgba(255, 255, 255, 0.07); --neon-blue: #00d2ff; --neon-purple: #9d50bb; }
+        :root { --bg-dark: #02040a; --glass: rgba(255, 255, 255, 0.05); --neon-blue: #00d2ff; --neon-purple: #9d50bb; }
         body { background: var(--bg-dark); color: #e0e0e0; font-family: 'Inter', sans-serif; margin: 0; overflow-x: hidden; }
 
+        /* Background Layers */
         .bg-animate {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #02040a;
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(0, 102, 255, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(102, 0, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(0, 210, 255, 0.05) 0%, transparent 70%);
-            z-index: -3; animation: nebulaMove 20s ease-in-out infinite alternate;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3;
+            background: radial-gradient(circle at 20% 30%, rgba(0, 102, 255, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 70%, rgba(102, 0, 255, 0.1) 0%, transparent 50%);
+            animation: nebulaMove 20s infinite alternate;
         }
-        @keyframes nebulaMove { 0% { transform: scale(1); } 100% { transform: scale(1.1) translate(15px, -15px); } }
+        @keyframes nebulaMove { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
         #starCanvas { position: fixed; top: 0; left: 0; z-index: -2; pointer-events: none; }
 
+        /* Navigation Box */
         .profile-launcher { position: fixed; top: 20px; left: 20px; z-index: 1000; text-decoration: none; }
-        .profile-box { background: var(--glass); backdrop-filter: blur(10px); border: 1px solid var(--neon-blue); padding: 8px 15px; border-radius: 50px; display: flex; align-items: center; transition: 0.3s; }
-        .profile-box:hover { background: rgba(0, 210, 255, 0.2); box-shadow: 0 0 15px var(--neon-blue); transform: scale(1.05); }
+        .profile-box { 
+            background: var(--glass); backdrop-filter: blur(10px); 
+            border: 1px solid var(--neon-blue); padding: 8px 18px; border-radius: 50px; 
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.3); transition: 0.3s; 
+        }
 
-        .glass-card { background: var(--glass); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; transition: 0.4s; }
-        .hero-title { background: linear-gradient(to right, var(--neon-blue), var(--neon-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; text-transform: uppercase; }
+        /* FIXED ALIGNMENT & POP-UP CARDS */
+        .glass-card {
+            background: var(--glass); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px;
+            height: 100%; /* Ensures all cards in a row are same height */
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+        }
+        .glass-card:hover {
+            border: 1px solid var(--neon-blue);
+            box-shadow: 0 15px 35px rgba(0, 210, 255, 0.3);
+            transform: translateY(-10px);
+        }
+
+        .hero-title { background: linear-gradient(to right, var(--neon-blue), var(--neon-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; }
         .btn-neon { background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple)); color: white; border: none; font-weight: 700; border-radius: 30px; }
-        .form-control, .form-select { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.1); color: white !important; }
+        .form-control { background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.1); color: white !important; border-radius: 12px; }
+        
+        /* Sidebar Sticky Adjustment */
+        .sticky-sidebar { position: sticky; top: 100px; }
     </style>
 </head>
 <body>
@@ -37,62 +56,66 @@
     <canvas id="starCanvas"></canvas>
 
     <a href="/portfolio" class="profile-launcher">
-        <div class="profile-box shadow-lg">
-            <img src="https://via.placeholder.com/100" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px; border: 1px solid var(--neon-blue);" alt="Architect">
-            <span class="text-white small fw-bold">ARCHITECT NODE</span>
+        <div class="profile-box">
+            <span class="text-white small fw-bold"><i class="fas fa-user-astronaut me-2"></i>ARCHITECT NODE</span>
         </div>
     </a>
 
-    <nav class="navbar navbar-dark py-4 text-center">
-        <div class="container justify-content-center">
-            <span class="navbar-brand hero-title fs-2"><i class="fas fa-brain me-2"></i>KJC NEURAL VAULT</span>
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h1 class="hero-title display-3 mb-2">NEURAL VAULT</h1>
+            <p class="text-info text-uppercase fw-bold small" style="letter-spacing: 5px;">BSc AI & ML Data Interface</p>
         </div>
-    </nav>
 
-    <div class="container">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            {% for category, message in messages %}
-              <div class="alert glass-card border-0 text-white alert-dismissible fade show mb-4" role="alert">
-                {{ message }} <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
-              </div>
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                  {% if messages %}{% for category, message in messages %}
+                    <div class="alert glass-card border-0 text-white alert-dismissible fade show mb-4 py-3 px-4" role="alert">
+                        <i class="fas fa-bolt me-2 text-warning"></i> {{ message }} 
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
+                    </div>
+                  {% endfor %}{% endif %}
+                {% endwith %}
+            </div>
+        </div>
 
         <div class="row justify-content-center mb-5">
-            <div class="col-md-7">
-                <form action="/" method="GET" class="input-group glass-card p-2">
-                    <input type="text" name="search" class="form-control border-0 bg-transparent ps-4" placeholder="Query neural database...">
-                    <button class="btn btn-neon px-5 ms-2" type="submit">SEARCH</button>
+            <div class="col-md-8">
+                <form action="/" method="GET" class="input-group glass-card p-2 shadow-lg">
+                    <input type="text" name="search" class="form-control border-0 bg-transparent ps-4" placeholder="Search the neural network...">
+                    <button class="btn btn-neon px-5 ms-2" type="submit">EXECUTE</button>
                 </form>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-lg-4 mb-4">
-                <div class="glass-card p-4 sticky-top" style="top: 30px;">
-                    <h4 class="hero-title mb-4">Input Node</h4>
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="glass-card p-4 sticky-sidebar">
+                    <h4 class="text-white mb-4"><i class="fas fa-plus-circle me-2 text-info"></i>Inject Data</h4>
                     <form action="/add" method="POST">
-                        <div class="mb-3"><label class="small text-uppercase opacity-50 fw-bold">Title</label><input type="text" name="title" class="form-control" required></div>
-                        <div class="mb-3"><label class="small text-uppercase opacity-50 fw-bold">URL</label><input type="url" name="url" class="form-control" required></div>
-                        <div class="mb-4"><label class="small text-uppercase opacity-50 fw-bold">Subject</label><select name="category" class="form-select"><option value="Data Structures">Data Structures</option><option value="OS and Networks">OS & Networks</option><option value="Math and Stats">Math & Stats</option></select></div>
-                        <button type="submit" class="btn btn-neon w-100 py-3">INJECT DATA</button>
+                        <div class="mb-3"><label class="small text-info fw-bold mb-2">TOPIC TITLE</label><input type="text" name="title" class="form-control" required></div>
+                        <div class="mb-3"><label class="small text-info fw-bold mb-2">ACCESS URL</label><input type="url" name="url" class="form-control" required></div>
+                        <div class="mb-4"><label class="small text-info fw-bold mb-2">CLASSIFICATION</label><select name="category" class="form-select bg-dark text-white border-secondary"><option value="Data Structures">Data Structures</option><option value="OS and Networks">OS & Networks</option><option value="Math and Stats">Math & Stats</option></select></div>
+                        <button type="submit" class="btn btn-neon w-100 py-3">ADD TO VAULT</button>
                     </form>
                 </div>
             </div>
+
             <div class="col-lg-8">
-                <div class="row">
+                <div class="row g-4">
                     {% for item in items %}
-                    <div class="col-md-6 mb-4">
-                        <div class="glass-card p-4 h-100 d-flex flex-column">
-                            <h5 class="fw-bold mb-3 text-white">{{ item.title }}</h5>
-                            <span class="badge rounded-pill mb-4 border border-info" style="color: var(--neon-blue); width: fit-content;">{{ item.category or 'General' }}</span>
-                            <div class="mt-auto">
-                                <a href="{{ item.url }}" target="_blank" class="btn btn-outline-info w-100 rounded-pill mb-3">ACCESS DATA</a>
-                                <div class="d-flex justify-content-between">
-                                    <a href="/edit/{{ item._id }}" class="text-white-50 small text-decoration-none">📝 Tune</a>
-                                    <a href="/delete/{{ item._id }}" class="text-danger small text-decoration-none" onclick="return confirm('Purge?')">🗑 Purge</a>
+                    <div class="col-md-6">
+                        <div class="glass-card p-4 shadow">
+                            <div class="card-content flex-grow-1">
+                                <h5 class="fw-bold mb-2 text-white">{{ item.title }}</h5>
+                                <span class="badge rounded-pill mb-4 border border-info text-info" style="background: rgba(0, 210, 255, 0.1);">{{ item.category or 'General' }}</span>
+                            </div>
+                            <div class="card-actions mt-auto border-top pt-3">
+                                <a href="{{ item.url }}" target="_blank" class="btn btn-outline-info w-100 rounded-pill mb-3 fw-bold">ACCESS SOURCE</a>
+                                <div class="d-flex justify-content-between px-1">
+                                    <a href="/edit/{{ item._id }}" class="text-white-50 small text-decoration-none"><i class="fas fa-cog me-1"></i> Modify</a>
+                                    <a href="/delete/{{ item._id }}" class="text-danger small text-decoration-none" onclick="return confirm('Purge?')"><i class="fas fa-trash me-1"></i> Delete</a>
                                 </div>
                             </div>
                         </div>
@@ -102,14 +125,14 @@
             </div>
         </div>
 
-        <div class="row justify-content-center my-5">
+        <div class="row justify-content-center mt-5 pt-5">
             <div class="col-md-8">
-                <div class="glass-card p-5">
-                    <h3 class="hero-title text-center mb-4">System Feedback</h3>
-                    <form action="/feedback" method="POST">
-                        <div class="mb-3"><label class="small text-info fw-bold">NAME</label><input type="text" name="name" class="form-control" required></div>
-                        <div class="mb-3"><label class="small text-info fw-bold">MESSAGE PACKET</label><textarea name="message" class="form-control" rows="3" required></textarea></div>
-                        <div class="text-center"><button type="submit" class="btn btn-neon px-5 py-2">TRANSMIT</button></div>
+                <div class="glass-card p-5 border border-info shadow-lg text-center">
+                    <h3 class="hero-title mb-4">Transmit Feedback</h3>
+                    <form action="/feedback" method="POST" class="text-start">
+                        <div class="mb-3"><input type="text" name="name" class="form-control" placeholder="Your Name" required></div>
+                        <div class="mb-4"><textarea name="message" class="form-control" rows="3" placeholder="Message Packet..." required></textarea></div>
+                        <div class="text-center"><button type="submit" class="btn btn-neon px-5 py-3">SEND DATA</button></div>
                     </form>
                 </div>
             </div>
@@ -117,19 +140,13 @@
     </div>
 
     <script>
-        const canvas = document.getElementById('starCanvas');
-        const ctx = canvas.getContext('2d');
+        const canvas = document.getElementById('starCanvas'); const ctx = canvas.getContext('2d');
         let stars = []; const mouse = { x: null, y: null };
         function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        window.addEventListener('resize', resize);
-        window.addEventListener('mousemove', (e) => { mouse.x = e.x; mouse.y = e.y; });
+        window.addEventListener('resize', resize); window.addEventListener('mousemove', (e) => { mouse.x = e.x; mouse.y = e.y; });
         class Star {
             constructor() { this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height; this.size = Math.random() * 1.5; this.baseX = this.x; this.baseY = this.y; this.density = (Math.random() * 20) + 1; }
-            draw() { 
-                ctx.fillStyle = 'rgba(173, 216, 230, ' + (Math.random() * 0.8 + 0.2) + ')'; 
-                ctx.shadowBlur = 5; ctx.shadowColor = '#00d2ff';
-                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); 
-            }
+            draw() { ctx.fillStyle = 'rgba(173, 216, 230, 0.8)'; ctx.shadowBlur = 5; ctx.shadowColor = '#00d2ff'; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
             update() {
                 let dx = mouse.x - this.x; let dy = mouse.y - this.y; let distance = Math.sqrt(dx*dx + dy*dy);
                 if (distance < 120) { let force = (120 - distance) / 120; this.x -= (dx/distance) * force * this.density; this.y -= (dy/distance) * force * this.density; }

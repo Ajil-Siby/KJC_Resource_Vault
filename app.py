@@ -13,10 +13,10 @@ try:
     client = MongoClient(uri)
     db = client['KJC_Vault_DB']    
     collection = db['resources']
-    feedback_collection = db['feedback'] # New collection for feedback data
-    print("Neural Link Established: MongoDB Atlas Connected.")
+    feedback_collection = db['feedback']
+    print("Neural Interface Online.")
 except Exception as e:
-    print(f"Connection Error: {e}")
+    print(f"Link Error: {e}")
 
 @app.route('/')
 def index():
@@ -24,7 +24,6 @@ def index():
     query = {}
     if search_query:
         query["title"] = {"$regex": search_query, "$options": "i"}
-    
     items = list(collection.find(query).sort("_id", -1))
     return render_template('index.html', items=items)
 
@@ -39,7 +38,7 @@ def add_resource():
     category = request.form.get('category')
     if title and url:
         collection.insert_one({"title": title, "url": url, "category": category})
-        flash(f"Data Packet '{title}' injected successfully.", "success")
+        flash(f"Data Successfully Injected: {title}", "success")
     return redirect(url_for('index'))
 
 @app.route('/feedback', methods=['POST'])
@@ -48,13 +47,13 @@ def submit_feedback():
     message = request.form.get('message')
     if name and message:
         feedback_collection.insert_one({"name": name, "message": message})
-        flash("Feedback transmitted successfully! Thank you for the data.", "success")
+        flash("Feedback transmitted to Architect Node.", "success")
     return redirect(url_for('index'))
 
 @app.route('/delete/<id>')
 def delete_resource(id):
     collection.delete_one({"_id": ObjectId(id)})
-    flash("Resource purged from the neural vault.", "info")
+    flash("Resource purged from system.", "info")
     return redirect(url_for('index'))
 
 @app.route('/edit/<id>', methods=['GET', 'POST'])
@@ -68,7 +67,7 @@ def edit_resource(id):
                 "category": request.form.get('category')
             }}
         )
-        flash("System Update: Resource parameters modified.", "success")
+        flash("Neural parameters re-tuned.", "success")
         return redirect(url_for('index'))
     item = collection.find_one({"_id": ObjectId(id)})
     return render_template('edit.html', item=item)
