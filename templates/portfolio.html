@@ -50,7 +50,10 @@
                     
                     <div class="row align-items-center g-5">
                         <div class="col-md-4 text-center">
-                            <img src="https://via.placeholder.com/250" class="rounded-circle border border-4 border-info shadow-lg mb-3" style="width: 200px; height: 200px; object-fit: cover;">
+                            <img src="{{ url_for('static', filename='profile.png') }}" 
+                                 class="rounded-circle border border-4 border-info shadow-lg mb-3" 
+                                 alt="Ajil Siby" 
+                                 style="width: 200px; height: 200px; object-fit: cover;">
                             <h2 class="text-white">Ajil Siby</h2>
                             <p class="text-info text-uppercase small fw-bold">Architect Node</p>
                         </div>
