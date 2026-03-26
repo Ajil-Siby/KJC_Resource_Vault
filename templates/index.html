@@ -20,7 +20,7 @@
         @keyframes nebulaMove { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
         #starCanvas { position: fixed; top: 0; left: 0; z-index: -2; pointer-events: none; }
 
-        /* Architect Node Launcher */
+        /* Updated: Architect Launcher */
         .profile-launcher { position: fixed; top: 20px; left: 20px; z-index: 1000; text-decoration: none; }
         .profile-box { 
             background: var(--glass); backdrop-filter: blur(10px); 
@@ -47,22 +47,16 @@
         }
         .glass-card:hover { border: 1px solid var(--neon-blue); box-shadow: 0 15px 35px rgba(0, 210, 255, 0.3); transform: translateY(-10px); }
         
-        /* SIDEBAR LOCK: Floating Left Column */
+        /* Floating Sidebar */
         .sidebar-fixed {
-            width: 330px;
-            float: left;
-            margin-right: 30px;
-            margin-bottom: 30px;
-            height: fit-content !important; 
-            position: sticky;
-            top: 20px;
-            z-index: 10;
+            width: 330px; float: left; margin-right: 30px; margin-bottom: 30px;
+            height: fit-content !important; position: sticky; top: 20px; z-index: 10;
         }
 
         .hero-title { background: linear-gradient(to right, var(--neon-blue), var(--neon-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; }
         .btn-neon { background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple)); color: white; border: none; font-weight: 700; border-radius: 30px; }
         
-        /* Form Visibility Fixes */
+        /* Form Inputs & Solid White Placeholder */
         .form-control { 
             background: rgba(0, 0, 0, 0.5) !important; 
             border: 1px solid rgba(255, 255, 255, 0.1); 
@@ -73,6 +67,10 @@
             color: white !important;
             border-color: var(--neon-blue);
             box-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
+        }
+        .form-control::placeholder { 
+            color: #ffffff !important; 
+            opacity: 1 !important; 
         }
         .clearfix::after { content: ""; clear: both; display: table; }
     </style>
