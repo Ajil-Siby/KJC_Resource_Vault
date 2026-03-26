@@ -38,7 +38,7 @@ def add_resource():
     category = request.form.get('category')
     if title and url:
         collection.insert_one({"title": title, "url": url, "category": category})
-        flash(f"Data Successfully Injected: {title}", "success")
+        flash(f"Data Injected: {title}", "success")
     return redirect(url_for('index'))
 
 @app.route('/feedback', methods=['POST'])
@@ -47,13 +47,13 @@ def submit_feedback():
     message = request.form.get('message')
     if name and message:
         feedback_collection.insert_one({"name": name, "message": message})
-        flash("Feedback transmitted to Architect Node.", "success")
+        flash("Feedback received.", "success")
     return redirect(url_for('index'))
 
 @app.route('/delete/<id>')
 def delete_resource(id):
     collection.delete_one({"_id": ObjectId(id)})
-    flash("Resource purged from system.", "info")
+    flash("Resource purged.", "info")
     return redirect(url_for('index'))
 
 @app.route('/edit/<id>', methods=['GET', 'POST'])
@@ -67,7 +67,7 @@ def edit_resource(id):
                 "category": request.form.get('category')
             }}
         )
-        flash("Neural parameters re-tuned.", "success")
+        flash("Tuning complete.", "success")
         return redirect(url_for('index'))
     item = collection.find_one({"_id": ObjectId(id)})
     return render_template('edit.html', item=item)

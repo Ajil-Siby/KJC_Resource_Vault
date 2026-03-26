@@ -10,7 +10,7 @@
         :root { --bg-dark: #02040a; --glass: rgba(255, 255, 255, 0.05); --neon-blue: #00d2ff; --neon-purple: #9d50bb; }
         body { background: var(--bg-dark); color: #e0e0e0; font-family: 'Inter', sans-serif; margin: 0; overflow-x: hidden; }
 
-        /* Background Layers */
+        /* Background Nebula */
         .bg-animate {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3;
             background: radial-gradient(circle at 20% 30%, rgba(0, 102, 255, 0.15) 0%, transparent 50%),
@@ -20,35 +20,54 @@
         @keyframes nebulaMove { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
         #starCanvas { position: fixed; top: 0; left: 0; z-index: -2; pointer-events: none; }
 
-        /* Navigation Box */
+        /* RESTORED: Architect Node Launcher */
         .profile-launcher { position: fixed; top: 20px; left: 20px; z-index: 1000; text-decoration: none; }
         .profile-box { 
             background: var(--glass); backdrop-filter: blur(10px); 
             border: 1px solid var(--neon-blue); padding: 8px 18px; border-radius: 50px; 
             box-shadow: 0 0 15px rgba(0, 210, 255, 0.3); transition: 0.3s; 
         }
+        .profile-box:hover { transform: scale(1.1); box-shadow: 0 0 25px var(--neon-blue); }
 
-        /* FIXED ALIGNMENT & POP-UP CARDS */
+        /* Proper Search Bar Styling */
+        .search-container {
+            background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 210, 255, 0.3); border-radius: 50px;
+            padding: 8px 15px; transition: 0.3s;
+        }
+        .search-container:focus-within { border-color: var(--neon-blue); box-shadow: 0 0 20px rgba(0, 210, 255, 0.4); }
+        .search-input { background: transparent !important; border: none !important; color: white !important; box-shadow: none !important; }
+
+        /* Card Pop-up Styling */
         .glass-card {
             background: var(--glass); backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px;
-            height: 100%; /* Ensures all cards in a row are same height */
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            flex-direction: column;
+            height: 100%; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; flex-direction: column;
         }
-        .glass-card:hover {
-            border: 1px solid var(--neon-blue);
-            box-shadow: 0 15px 35px rgba(0, 210, 255, 0.3);
-            transform: translateY(-10px);
-        }
+        .glass-card:hover { border: 1px solid var(--neon-blue); box-shadow: 0 15px 35px rgba(0, 210, 255, 0.3); transform: translateY(-10px); }
 
         .hero-title { background: linear-gradient(to right, var(--neon-blue), var(--neon-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; }
         .btn-neon { background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple)); color: white; border: none; font-weight: 700; border-radius: 30px; }
-        .form-control { background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.1); color: white !important; border-radius: 12px; }
-        
-        /* Sidebar Sticky Adjustment */
-        .sticky-sidebar { position: sticky; top: 100px; }
+        /* FIXED FEEDBACK FORM TYPING VISIBILITY */
+.form-control { 
+    background: rgba(0, 0, 0, 0.5) !important; 
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    color: white !important; 
+}
+
+/* Forces the background to stay dark even when you click it */
+.form-control:focus {
+    background: rgba(0, 0, 0, 0.7) !important;
+    color: white !important;
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
+}
+
+/* Ensures placeholder text is visible but slightly faded */
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
     </style>
 </head>
 <body>
@@ -63,40 +82,37 @@
 
     <div class="container py-5">
         <div class="text-center mb-5">
-            <h1 class="hero-title display-3 mb-2">NEURAL VAULT</h1>
+            <h1 class="hero-title display-3">NEURAL VAULT</h1>
             <p class="text-info text-uppercase fw-bold small" style="letter-spacing: 5px;">BSc AI & ML Data Interface</p>
-        </div>
-
-        <div class="row justify-content-center">
-            <div class="col-md-10">
-                {% with messages = get_flashed_messages(with_categories=true) %}
-                  {% if messages %}{% for category, message in messages %}
-                    <div class="alert glass-card border-0 text-white alert-dismissible fade show mb-4 py-3 px-4" role="alert">
-                        <i class="fas fa-bolt me-2 text-warning"></i> {{ message }} 
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
-                    </div>
-                  {% endfor %}{% endif %}
-                {% endwith %}
-            </div>
         </div>
 
         <div class="row justify-content-center mb-5">
             <div class="col-md-8">
-                <form action="/" method="GET" class="input-group glass-card p-2 shadow-lg">
-                    <input type="text" name="search" class="form-control border-0 bg-transparent ps-4" placeholder="Search the neural network...">
-                    <button class="btn btn-neon px-5 ms-2" type="submit">EXECUTE</button>
+                <form action="/" method="GET" class="search-container shadow-lg">
+                    <div class="input-group">
+                        <span class="input-group-text bg-transparent border-0 text-info"><i class="fas fa-search"></i></span>
+                        <input type="text" name="search" class="form-control search-input" placeholder="Search resources..." value="{{ request.args.get('search', '') }}">
+                        {% if request.args.get('search') %}<a href="/" class="btn btn-outline-danger border-0 me-2"><i class="fas fa-times"></i></a>{% endif %}
+                        <button class="btn btn-neon px-5" type="submit">EXECUTE</button>
+                    </div>
                 </form>
             </div>
         </div>
 
         <div class="row g-4">
             <div class="col-lg-4">
-                <div class="glass-card p-4 sticky-sidebar">
-                    <h4 class="text-white mb-4"><i class="fas fa-plus-circle me-2 text-info"></i>Inject Data</h4>
+                <div class="glass-card p-4">
+                    <h4 class="text-white mb-4">Inject Data</h4>
                     <form action="/add" method="POST">
-                        <div class="mb-3"><label class="small text-info fw-bold mb-2">TOPIC TITLE</label><input type="text" name="title" class="form-control" required></div>
-                        <div class="mb-3"><label class="small text-info fw-bold mb-2">ACCESS URL</label><input type="url" name="url" class="form-control" required></div>
-                        <div class="mb-4"><label class="small text-info fw-bold mb-2">CLASSIFICATION</label><select name="category" class="form-select bg-dark text-white border-secondary"><option value="Data Structures">Data Structures</option><option value="OS and Networks">OS & Networks</option><option value="Math and Stats">Math & Stats</option></select></div>
+                        <div class="mb-3"><label class="small text-info fw-bold mb-2">TITLE</label><input type="text" name="title" class="form-control" required></div>
+                        <div class="mb-3"><label class="small text-info fw-bold mb-2">URL</label><input type="url" name="url" class="form-control" required></div>
+                        <div class="mb-4"><label class="small text-info fw-bold mb-2">CLASS</label>
+                            <select name="category" class="form-select bg-dark text-white border-secondary">
+                                <option value="Data Structures">Data Structures</option>
+                                <option value="OS and Networks">OS & Networks</option>
+                                <option value="Math and Stats">Math & Stats</option>
+                            </select>
+                        </div>
                         <button type="submit" class="btn btn-neon w-100 py-3">ADD TO VAULT</button>
                     </form>
                 </div>
@@ -107,15 +123,15 @@
                     {% for item in items %}
                     <div class="col-md-6">
                         <div class="glass-card p-4 shadow">
-                            <div class="card-content flex-grow-1">
+                            <div class="flex-grow-1">
                                 <h5 class="fw-bold mb-2 text-white">{{ item.title }}</h5>
-                                <span class="badge rounded-pill mb-4 border border-info text-info" style="background: rgba(0, 210, 255, 0.1);">{{ item.category or 'General' }}</span>
+                                <span class="badge border border-info text-info mb-4" style="background: rgba(0, 210, 255, 0.1);">{{ item.category or 'General' }}</span>
                             </div>
-                            <div class="card-actions mt-auto border-top pt-3">
+                            <div class="mt-auto pt-3 border-top">
                                 <a href="{{ item.url }}" target="_blank" class="btn btn-outline-info w-100 rounded-pill mb-3 fw-bold">ACCESS SOURCE</a>
                                 <div class="d-flex justify-content-between px-1">
-                                    <a href="/edit/{{ item._id }}" class="text-white-50 small text-decoration-none"><i class="fas fa-cog me-1"></i> Modify</a>
-                                    <a href="/delete/{{ item._id }}" class="text-danger small text-decoration-none" onclick="return confirm('Purge?')"><i class="fas fa-trash me-1"></i> Delete</a>
+                                    <a href="/edit/{{ item._id }}" class="text-white-50 small text-decoration-none">Modify</a>
+                                    <a href="/delete/{{ item._id }}" class="text-danger small text-decoration-none" onclick="return confirm('Purge?')">Delete</a>
                                 </div>
                             </div>
                         </div>
@@ -126,12 +142,12 @@
         </div>
 
         <div class="row justify-content-center mt-5 pt-5">
-            <div class="col-md-8">
-                <div class="glass-card p-5 border border-info shadow-lg text-center">
+            <div class="col-md-8 text-center">
+                <div class="glass-card p-5 border border-info">
                     <h3 class="hero-title mb-4">Transmit Feedback</h3>
                     <form action="/feedback" method="POST" class="text-start">
                         <div class="mb-3"><input type="text" name="name" class="form-control" placeholder="Your Name" required></div>
-                        <div class="mb-4"><textarea name="message" class="form-control" rows="3" placeholder="Message Packet..." required></textarea></div>
+                        <div class="mb-4"><textarea name="message" class="form-control" rows="3" placeholder="Message..." required></textarea></div>
                         <div class="text-center"><button type="submit" class="btn btn-neon px-5 py-3">SEND DATA</button></div>
                     </form>
                 </div>
