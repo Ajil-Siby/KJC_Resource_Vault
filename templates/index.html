@@ -46,28 +46,35 @@
             display: flex; flex-direction: column;
         }
         .glass-card:hover { border: 1px solid var(--neon-blue); box-shadow: 0 15px 35px rgba(0, 210, 255, 0.3); transform: translateY(-10px); }
+        
+        /* FIXED SIZE SIDEBAR */
+        .sidebar-fixed {
+            height: fit-content !important; /* Forces the box to stop stretching */
+            position: sticky;
+            top: 20px;
+            z-index: 10;
+        }
 
         .hero-title { background: linear-gradient(to right, var(--neon-blue), var(--neon-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; }
         .btn-neon { background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple)); color: white; border: none; font-weight: 700; border-radius: 30px; }
+        
         /* FIXED FEEDBACK FORM TYPING VISIBILITY */
-.form-control { 
-    background: rgba(0, 0, 0, 0.5) !important; 
-    border: 1px solid rgba(255, 255, 255, 0.1); 
-    color: white !important; 
-}
+        .form-control { 
+            background: rgba(0, 0, 0, 0.5) !important; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            color: white !important; 
+        }
 
-/* Forces the background to stay dark even when you click it */
-.form-control:focus {
-    background: rgba(0, 0, 0, 0.7) !important;
-    color: white !important;
-    border-color: var(--neon-blue);
-    box-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
-}
+        .form-control:focus {
+            background: rgba(0, 0, 0, 0.7) !important;
+            color: white !important;
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
+        }
 
-/* Ensures placeholder text is visible but slightly faded */
-.form-control::placeholder {
-    color: rgba(255, 255, 255, 0.4);
-}
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
     </style>
 </head>
 <body>
@@ -101,7 +108,7 @@
 
         <div class="row g-4">
             <div class="col-lg-4">
-                <div class="glass-card p-4">
+                <div class="glass-card p-4 sidebar-fixed">
                     <h4 class="text-white mb-4">Inject Data</h4>
                     <form action="/add" method="POST">
                         <div class="mb-3"><label class="small text-info fw-bold mb-2">TITLE</label><input type="text" name="title" class="form-control" required></div>
